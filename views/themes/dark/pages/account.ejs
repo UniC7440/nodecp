@@ -1,0 +1,122 @@
+<div class="table-reponsive overflow-auto" style="margin: 20px;">
+  <h2>Viewing your Account</h2>
+  <table class="vertical-tabler" style="font-family: Ubuntu; background-color: white; color: black;">
+    <tr>
+      <th>Username</th>
+      <td><%= request.session.account.userid %></td>
+      <th>Account ID</th>
+      <% if (request.session.account.group_id > 60) { %>
+        <td><%= request.session.account.account_id %></td>
+      <% } else { %>
+        <td><i>Hidden</i></td>
+      <% } %>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td><%= request.session.account.email %></td>
+      <th>Group ID</th>
+      <td><%= request.session.account.group_id %></td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td><%= request.session.account.sex === 'M' ? 'Male' : 'Female'; %></td>
+      <th>Credits</th>
+      <% let credits = request.mysql.get('cp_credits', 'account_id', `account_id_${request.session.account.account_id}`); %>
+      <td><%= credits.length > 0 ? credits[0].balance.toLocaleString() : 0 %></td>
+    </tr>
+    <tr>
+      <th>Login Count</th>
+      <td colspan="3"><%= request.session.account.logincount.toLocaleString() %></td>
+    </tr>
+    <tr>
+      <th>Birthdate</th>
+      <td colspan="3"><%= request.moment(request.session.account.birthdate).format('YYYY-MM-DD') %></td>
+    </tr>
+    <tr>
+      <th>Last Login Date</th>
+      <td colspan="3"><%= request.session.account.lastlogin ? request.moment(request.session.account.lastlogin).format('LLL') : 'Never Logged In.' %></td>
+    </tr>
+    <tr>
+      <th>Last IP Used</th>
+      <td colspan="3"><%= request.session.account.last_ip || 'None.' %></td>
+    </tr>
+  </table>
+
+  <br />
+  <h2>View your Characters</h2>
+  <table style="font-family: Ubuntu; background-color: white; color: black;">
+    <% let chars = request.mysql.get('char', 'account_id', request.session.account.account_id) %>
+    <% if (chars.length < 1) { %>
+      <h6>No Characters found for this Account.</h6>
+    <% } else { %>
+      <tr>
+        <th>Slot</th>
+        <th>Character Name</th>
+        <th>Job Class</th>
+        <th>Base Level</th>
+        <th>Job Level</th>
+        <th>Zeny</th>
+        <th>Guild</th>
+        <th>Status</th>
+      </tr>
+      <% for (var char of chars) { %>
+        <tr>
+          <td><%= char.char_num %></td>
+          <td><%= char.name %></td>
+          <td><%= char.class %></td>
+          <td><%= char.base_level %></td>
+          <td><%= char.job_level %></td>
+          <td><%= char.zeny.toLocaleString() %></td>
+          <% if (char.guild_id < 1) { %>
+            <td><i>None</i></td>
+          <% } else { %>
+            <td><%= request.mysql.get('guild', 'guild_id', char.guild_id)[0].name; %></td>
+          <% } %>
+          <% if (char.online > 0) { %>
+            <td style="color: green;">Online</td>
+          <% } else { %>
+            <td style="color: red;">Offline</td>
+          <% } %>
+        </tr>
+      <% } %>
+    <% } %>
+  </table>
+
+  <br />
+  <h2>View your Storage Items</h2>
+  <table style="font-family: Ubuntu; background-color: white; color: black;">
+    <% let _storage = request.mysql.get('storage', 'account_id', request.session.account.account_id) %>
+    <% if (_storage.length < 1) { %>
+      <h6>No Items found in your Storage.</h6>
+    <% } else { %>
+      <tr>
+        <th>Item ID</th>
+        <th>Item Name</th>
+        <th>Amount</th>
+        <th>Identified</th>
+        <th>Broken</th>
+        <th>Card 0</th>
+        <th>Card 1</th>
+        <th>Card 2</th>
+        <th>Card 3</th>
+      </tr>
+      <% for (var storage of _storage) { %>
+        <tr>
+          <td><%= storage.nameid %></td>
+          <% if (request.isRenewal) { %>
+            <td><%= `${storage.refine > 0 ? `+${storage.refine} ` : ''}${request.mysql.get('item_db_re', 'id', storage.nameid, `item_db_re_${storage.nameid}`)[0].name_japanese}` %></td>
+          <% } else { %>
+            <td><%= `${storage.refine > 0 ? `+${storage.refine} ` : ''}${request.mysql.get('item_db', 'id', storage.nameid, `item_db_${storage.nameid}`)[0].name_japanese}` %></td>
+          <% } %>
+          <td><%= storage.amount %></td>
+          <td><%= storage.identify < 1 ? 'No' : 'Yes' %></td>
+          <td><%= storage.attribute < 1 ? 'No' : 'Yes' %></td>
+          <td><%= storage.card0 %></td>
+          <td><%= storage.card1 %></td>
+          <td><%= storage.card2 %></td>
+          <td><%= storage.card3 %></td>
+        </tr>
+      <% } %>
+    <% } %>
+  </table>
+</div>

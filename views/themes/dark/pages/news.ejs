@@ -1,0 +1,24 @@
+<% if (request.WEB_CONFIG.NEWS.rss) { %>
+  <div class="container">
+    <h1 class="text-center">Latest News</h1>
+    <div class="row">
+      <% for (var rss of request.RSS_FEED.items) { %>
+        <% if (request.RSS_FEED.items.indexOf(rss) === request.WEB_CONFIG.NEWS.limit) { %>
+          <% break; %>
+        <% } %>
+        <div style="overflow: auto;" data-aos="fade-right" data-aos-duration="1000">
+          <div class="card" style="margin: 20px;">
+            <div class="card-body" style="background-color: rgba(0, 0, 0, 0.8); %>">
+              <h5 class="card-title"><a href=<%= rss.link %> class="card-link"><%= rss.title %></a></h5>
+              <h6 class="card-subtitle mb-2 text-muted">Posted at <%= request.moment(rss.isoDate).format('LLL'); %></h6>
+              <p class="card-text"><%= rss.contentSnippet.substring(0, 550) + "..."; %></p>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+<% } else { %>
+  <h1 class="text-center">Latest News</h1>
+  <h3 class="text-center">RSS Feed is Disabled, will not display news.</h3>
+<% } %>

@@ -1,0 +1,53 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link rel="stylesheet" type='text/css' href="../css/template.css">
+
+<form action="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/auth` : '/auth' %>" method="post" class="p-5" id="accForm" style="margin: 16px auto;  max-width: 400px;">
+  <% if (expressFlash && expressFlash.length > 0) { %>
+    <% if (expressFlash[0] === 'acc_notexist') { %>
+      <div class="alert alert-danger" role="alert">
+        Account does not exists! Why not register it <a href="/register">here?</a>
+      </div>
+    <% } else if (expressFlash[0] === 'acc_wrongpass') { %>
+      <div class="alert alert-danger" role="alert">
+        Username is registered but you have given an incorrect password. Please try again.
+      </div>
+    <% } else if (expressFlash[0] === 'no_captcha') { %>
+      <div class="alert alert-danger" role="alert">
+        Please complete the captcha!
+      </div>
+    <% } else if (expressFlash[0] === 'captcha_fail') { %>
+      <div class="alert alert-danger" role="alert">
+        Recaptcha Failed!
+      </div>
+    <% } else if (expressFlash[0] === 'alr_loggedin') { %>
+      <div class="alert alert-danger" role="alert">
+        Already logged in!
+      </div>
+    <% } else if(expressFlash[0] === 'not_loggedin') { %>
+      <div class="alert alert-danger" role="alert">
+        Please login first!
+      </div>
+    <% } %>
+  <% } %>
+
+  <p class="h2 mb-4 text-center">Login to <%= request.WEB_CONFIG.title %></p>
+
+  <input type="text" id="defaultLoginFormUsername" class="d-inline form-control mb-4 text-center" placeholder="Username" name="username" required>
+
+  <input type="password" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Password" name="password" required>
+
+  <% if (request.WEB_CONFIG.recaptcha.enabled) { %>
+    <div class="text-center">
+      <h5>Security</h5>
+      <div style="display: inline-block;" class="g-recaptcha" data-theme="light" data-sitekey=<%= request.WEB_CONFIG.recaptcha.siteKey %>></div>
+    </div>
+  <% } %>
+
+  <button class="btn btn-primary btn-block my-2" type="submit">Login</button>
+
+  <div class="text-center">
+    <p>Don't have an account?
+      <a href="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/register` : '/register' %>">Register</a>
+    </p>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="text-center">
+    <h2 style="margin: 20px;"><%= request.WEB_CONFIG.title %> Installer</h2>
+    <p style="color: red;">This might take a while to install.</p>
+
+    <br />
+    <h5>What is this for?</h5>
+    <p>This is for installing database tables that are not found in cache. All requests to the web would be redirected here if a custom database table is not in the cache.</p>
+
+    <br />
+    <h5>But i'm not the Admin!</h5>
+    <p>Well, you have to wait for an admin to install the necessary database tables via this installer.</p>
+
+    <form style="margin: 16px auto;  max-width: 400px;" class="p-5" action="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/installer/install` : '/installer/install' %>" method="post">
+      <% if (expressFlash[0] === 'wrong_pass') { %>
+        <div class="alert alert-danger" role="alert">
+          Incorrect Installer Password!
+        </div>
+      <% } %>
+
+      <h3>Installer Password</h3>
+      <br />
+
+      <input type="password" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Password" name="password" required>
+      <button class="btn btn-primary btn-block my-2" type="submit">Login</button>
+    </form>
+  </div>
+</div>

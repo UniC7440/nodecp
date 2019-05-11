@@ -1,0 +1,106 @@
+{
+  "port": 80,
+  "title": "NodeCP",
+  "baseURI": "cp",
+  "accountCacheInterval": 30000,
+  "allowRegister": true,
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "versions": {
+    "showNode": false,
+    "showNodeCP": true
+  },
+  "installerPassword": "nodecp",
+  "NEWS": {
+    "rss": true,
+    "rssLink": "https://rathena.org/board/forum/9-community-news.xml",
+    "limit": 5,
+    "showOnHomePage": true
+  },
+  "recaptcha": {
+    "enabled": false,
+    "siteKey": "",
+    "secretKey": ""
+  },
+  "cacheAge": 0,
+  "secret": "ragnarok",
+  "BirthDateYearMin": 1970,
+  "PAGES": [
+    {
+      "type": "home",
+      "name": "home"
+    },
+    {
+      "type": "news",
+      "name": "news"
+    },
+    {
+      "type": "register",
+      "name": "register"
+    },
+    {
+      "type": "login",
+      "name": "login"
+    },
+    {
+      "type": "account",
+      "name": "account"
+    },
+    {
+      "type": "installer",
+      "name": "installer"
+    }
+  ],
+  "NAVS": [
+    {
+      "menu": "Main Menu",
+      "items": [
+        {
+          "name": "Home",
+          "href": "/",
+          "showEvenIfLoggedIn": true
+        },
+        {
+          "name": "News",
+          "href": "/news",
+          "showEvenIfLoggedIn": true
+        }
+      ]
+    },
+    {
+      "menu": "Account",
+      "items": [
+        {
+          "name": "Login",
+          "href": "/login"
+        },
+        {
+          "name": "Register",
+          "href": "/register"
+        },
+        {
+          "name": "View Account",
+          "href": "/account",
+          "mustbeLoggedIn": true
+        },
+        {
+          "name": "Logout",
+          "href": "/logout",
+          "mustbeLoggedIn": true
+        }
+      ]
+    }
+  ],
+  "databases": [
+    {
+      "name": "cp_credits",
+      "query": "CREATE TABLE cp_credits (account_id int(11), balance int(11), last_donation_date datetime, last_donation_amount float)"
+    },
+    {
+      "name": "cp_cmsnews",
+      "query": "CREATE TABLE cp_cmsnews (id int(11), title varchar(100), body text, link varchar(100), author varchar(100), created datetime, modified datetime)"
+    }
+  ]
+}

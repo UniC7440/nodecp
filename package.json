@@ -1,0 +1,35 @@
+{
+  "name": "nodecp",
+  "version": "0.3",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-dynamic-static": "^1.0.5",
+    "express-flash": "^0.0.2",
+    "express-flash-notification": "^0.5.0",
+    "express-session": "^1.16.1",
+    "memory-cache": "^0.2.0",
+    "moment": "^2.24.0",
+    "rss-parser": "^3.7.0",
+    "sync-mysql": "^3.0.1",
+    "walk": "^2.3.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UniverseCodes/nodecp-rework.git"
+  },
+  "author": "Universe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UniverseCodes/nodecp-rework/issues"
+  },
+  "homepage": "https://github.com/UniverseCodes/nodecp-rework#readme"
+}

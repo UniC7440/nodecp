@@ -1,0 +1,43 @@
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<div data-aos="fade-down" data-aos-duration="1000">
+  <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+    <div class="container">
+      <a href=<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/` : '/' %> class="navbar-brand"><%= request.WEB_CONFIG.title %></a>
+      <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
+        <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-1">
+        <ul class="nav navbar-nav">
+            <% for (var nav of request.WEB_CONFIG.NAVS) { %>
+              <% if (nav.items.length > 0) { %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <%= nav.menu %>
+                </a>
+              <% } %>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% if (request.session.loggedin) { %>
+                  <% for (var navItem of nav.items.filter(n => n.mustbeLoggedIn || n.showEvenIfLoggedIn)) { %>
+                    <% let route = request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}${navItem.href}` : navItem.href %>
+                    <a class="dropdown-item" href=<%= route %>><%= navItem.name %></a>
+                  <% } %>
+                <% } else { %>
+                  <% for (var navItem of nav.items.filter(n => !n.mustbeLoggedIn || n.showEvenIfLoggedIn)) { %>
+                    <% let route = request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}${navItem.href}` : navItem.href %>
+                    <a class="dropdown-item" href=<%= route %>><%= navItem.name %></a>
+                  <% } %>
+                <% } %>
+              </div>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<script>
+  AOS.init();
+</script>

@@ -1,0 +1,39 @@
+<div class="Footer ">
+  <p>
+    Theme:
+    <select name="themeSelector" id="themeSelector" onchange="changeTheme()">
+      <% for (var theme of request.session.THEMES || request.WEB_CONFIG.themes) { %>
+        <option value=<%= theme %>><%= theme %></option>
+      <% } %>
+    </select>
+
+    <br />
+    © 2019 <a href="https://github.com/UniverseCodes/">Universe</a><br />
+    <% if (request.WEB_CONFIG.versions.showNode) { %>
+      NodeJS Version: <%= process.version %><br />
+    <% } %>
+
+    <% if (request.WEB_CONFIG.versions.showNodeCP) { %>
+      NodeCP Version: v<%= request.VERSION %>
+    <% } %>
+  </p>
+</div>
+<script>
+  window.addEventListener("load", function() {
+  if (window.outerHeight > document.body.clientHeight)
+    document.querySelector(".Footer").classList.add("Fixed");
+  });
+
+  function changeTheme() {
+    var THEMES = <%- JSON.stringify(request.session.THEMES || request.WEB_CONFIG.themes); %>
+    var e = document.getElementById("themeSelector");
+    var newPos = e.selectedIndex;
+
+    THEMES.splice(newPos, 0, THEMES.splice(0, 1)[0]);
+    $.post("<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/theme` : '/theme' %>", { theme: THEMES }, function(data) {
+      if (typeof data.redirect === 'string') {
+        window.location = data.redirect;
+      }
+    });
+  }
+</script>

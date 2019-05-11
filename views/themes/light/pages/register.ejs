@@ -1,0 +1,94 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link rel="stylesheet" type='text/css' href="../css/template.css">
+
+<form action="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/signup` : '/signup' %>" method="post" class="p-5" id="accForm" style="margin: 16px auto;  max-width: 400px;">
+  <% if (expressFlash && expressFlash.length > 0) { %>
+    <% if (expressFlash[0] === 'acc_exist') { %>
+      <div class="alert alert-danger" role="alert">
+        Account already exists! Please use a different username.
+      </div>
+    <% } else if (expressFlash[0] === 'acc_done') { %>
+      <div class="alert alert-success" role="alert">
+        Successfully registered as <%= request.session.account.userid %>, you may Login <a href="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/login` : '/login' %>" class="alert-link">here.</a>
+      </div>
+    <% } else if (expressFlash[0] === 'no_captcha') { %>
+      <div class="alert alert-danger" role="alert">
+        Please complete the captcha!
+      </div>
+    <% } else if (expressFlash[0] === 'captcha_fail') { %>
+      <div class="alert alert-danger" role="alert">
+        Recaptcha Failed!
+      </div>
+    <% } else if (expressFlash[0] === 'alr_loggedin') { %>
+      <div class="alert alert-danger" role="alert">
+        Already logged in!
+      </div>
+    <% } else if (expressFlash[0] === 'signup_disabled') { %>
+      <div class="alert alert-danger" role="alert">
+        Sorry, you may not register. The admins has disallowed registering to the website.
+      </div>
+    <% } %>
+  <% } %>
+
+  <p class="h2 mb-4 text-center">Register to <%= request.WEB_CONFIG.title %></p>
+
+  <input type="text" id="defaultLoginFormUsername" class="form-control mb-4 text-center" placeholder="Username" name="username" required>
+
+  <input type="email" id="defaultLoginFormEmail" class="form-control mb-4 text-center" placeholder="Email" name="email" required>
+
+  <input type="password" id="defaultLoginFormPassword" class="form-control mb-4 text-center" placeholder="Password" name="password" required>
+
+  <select class="browser-default custom-select mb-4" id="select" name="gender">
+    <option value="M">Male</option>
+    <option value="F">Female</option>
+  </select>
+
+  <div class="form-group">
+    <div class="birth text-center">
+      <h5>Birthdate (Year/Month/Day)</h5>
+      <td>
+        <span class="date-field">
+          <select name="birthdate_year">
+            <% let date = new Date() %>
+            <% var i = request.WEB_CONFIG.BirthDateYearMin - 1; %>
+            <% while(i < date.getFullYear()) { %>
+              <% i++; %>
+              <option value=<%= i %>><%= i %></option>
+            <% } %>
+          </select>
+          <select name="birthdate_month">
+            <% var i = 0; %>
+            <% while(i < 12) { %>
+              <% i++; %>
+              <% if (i.toString().length === 1) i = `0${i}`; %>
+              <option value=<%= i %>><%= i %></option>
+            <% } %>
+          </select>
+          <select name="birthdate_day">
+            <% var i = 0; %>
+            <% while(i < 31) { %>
+              <% i++; %>
+              <% if (i.toString().length === 1) i = `0${i}`; %>
+              <option value=<%= i %>><%= i %></option>
+            <% } %>
+          </select>
+        </span>
+      </td>
+    </div>
+  </div>
+
+  <% if (request.WEB_CONFIG.recaptcha.enabled) { %>
+    <div class="text-center">
+      <h5>Security</h5>
+      <div style="display: inline-block;" class="g-recaptcha" data-theme="light" data-sitekey=<%= request.WEB_CONFIG.recaptcha.siteKey %>></div>
+    </div>
+  <% } %>
+
+  <button class="btn btn-primary btn-block my-2" type="submit">Register</button>
+
+  <div class="text-center">
+    <p>Already have an account?
+      <a href="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/login` : '/login' %>">Login</a>
+    </p>
+  </div>
+</form>
