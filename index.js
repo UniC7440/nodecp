@@ -13,6 +13,7 @@ const flash = require('express-flash');
 const Mysql = require('./handlers/mysql');
 const { readFileSync, watch } = require('fs');
 const dynamicStatic = require('express-dynamic-static')();
+const slash = require('express-slash');
 
 // Load configs
 const SERVER_CONFIG = require('./config/server');

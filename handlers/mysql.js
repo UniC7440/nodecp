@@ -114,6 +114,29 @@ module.exports = class NodeCPSql {
     return undefined;
   }
 
+  editMultiple(table, column, column_value, values) {
+    let result = '';
+    let realValues = [];
+
+    for (var i = 0; i < values.length; i++) {
+      realValues.push(values[i].value)
+
+      if (values.length === 1) {
+        result += `${values[i].column} = (?)`;
+      } else {
+        if (i < values.length - 1) {
+          result += `${values[i].column} = (?), `;
+        } else {
+          result += `${values[i].column} = (?)`;
+        }
+      }
+    };
+
+    this.db.query(`UPDATE ${this.database}.${table} SET ${result} WHERE ${column} = ${column_value}`, realValues);
+
+    return undefined;
+  }
+
   delete(table, column, key) {
     if (typeof table !== 'string' || typeof column !== 'string' || typeof key !== 'string')
       throw new Error('Invalid types given!');
@@ -142,6 +165,18 @@ module.exports = class NodeCPSql {
     }
 
     return this.cache.get(cacheName);
+  }
+
+  getNoCache(table, column, key, cacheName) {
+    if (typeof table !== 'string' || typeof column !== 'string')
+      throw new Error('Invalid types given!');
+
+    if (!cacheName)
+      cacheName = table;
+
+    let data = this.db.query(`SELECT * FROM ${this.database}.${table} WHERE ${column} = ?`, [key]);
+
+    return data;
   }
 
   /**

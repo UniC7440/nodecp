@@ -13,6 +13,9 @@ This is also a rework of the current nodecp, now using bootstrap as it's css and
 - [x] RSS Feed
 - [x] View Account
 - [x] Theme System
+- [x] Pincode System
+- [ ] Verification System
+- [ ] Reset Password
 
 ## Installing
  View at our [Wiki](https://github.com/UniverseCodes/nodecp/wiki/Installation)

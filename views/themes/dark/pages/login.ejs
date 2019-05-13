@@ -5,7 +5,7 @@
   <% if (expressFlash && expressFlash.length > 0) { %>
     <% if (expressFlash[0] === 'acc_notexist') { %>
       <div class="alert alert-danger" role="alert">
-        Account does not exists! Why not register it <a href="/register">here?</a>
+        Account does not exists! Why not register it <a href="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/register` : '/register' %>" >here?</a>
       </div>
     <% } else if (expressFlash[0] === 'acc_wrongpass') { %>
       <div class="alert alert-danger" role="alert">
@@ -23,9 +23,13 @@
       <div class="alert alert-danger" role="alert">
         Already logged in!
       </div>
-    <% } else if(expressFlash[0] === 'not_loggedin') { %>
+    <% } else if (expressFlash[0] === 'not_loggedin') { %>
       <div class="alert alert-danger" role="alert">
         Please login first!
+      </div>
+    <% } else if (expressFlash[0] === 'wrong_pin') { %>
+      <div class="alert alert-danger" role="alert">
+        Incorrect Pincode Given.
       </div>
     <% } %>
   <% } %>
@@ -35,6 +39,10 @@
   <input type="text" id="defaultLoginFormUsername" class="d-inline form-control mb-4 text-center" placeholder="Username" name="username" required>
 
   <input type="password" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Password" name="password" required>
+
+  <% if (request.WEB_CONFIG.pincodeEnabled) { %>
+    <input type="text" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Pincode" name="pincode">
+  <% } %>
 
   <% if (request.WEB_CONFIG.recaptcha.enabled) { %>
     <div class="text-center">

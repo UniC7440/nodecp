@@ -27,6 +27,10 @@
       <div class="alert alert-danger" role="alert">
         Please login first!
       </div>
+    <% } else if (expressFlash[0] === 'wrong_pin') { %>
+      <div class="alert alert-danger" role="alert">
+        Incorrect Pincode Given.
+      </div>
     <% } %>
   <% } %>
 
@@ -35,6 +39,10 @@
   <input type="text" id="defaultLoginFormUsername" class="d-inline form-control mb-4 text-center" placeholder="Username" name="username" required>
 
   <input type="password" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Password" name="password" required>
+
+  <% if (request.WEB_CONFIG.pincodeEnabled) { %>
+    <input type="text" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Pincode" name="pincode">
+  <% } %>
 
   <% if (request.WEB_CONFIG.recaptcha.enabled) { %>
     <div class="text-center">

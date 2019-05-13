@@ -27,6 +27,10 @@
       <div class="alert alert-danger" role="alert">
         Sorry, you may not register. The admins has disallowed registering to the website.
       </div>
+    <% } else if (expressFlash[0] === 'invalid_pin') { %>
+      <div class="alert alert-danger" role="alert">
+        An invalid Pincode was Given! Please give a proper pincode.
+      </div>
     <% } %>
   <% } %>
 
@@ -37,6 +41,10 @@
   <input type="email" id="defaultLoginFormEmail" class="form-control mb-4 text-center" placeholder="Email" name="email" required>
 
   <input type="password" id="defaultLoginFormPassword" class="form-control mb-4 text-center" placeholder="Password" name="password" required>
+
+  <% if (request.WEB_CONFIG.pincodeEnabled) { %>
+    <input type="text" id="defaultLoginFormPassword" class="form-control mb-4 text-center" placeholder="Pincode" name="pincode" required>
+  <% } %>
 
   <select class="browser-default custom-select mb-4" id="select" name="gender">
     <option value="M">Male</option>

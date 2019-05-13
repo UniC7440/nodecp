@@ -19,7 +19,8 @@ html {
   box-sizing: border-box;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  color: #777;
+  color: white;
+  font-family: Ubuntu;
   z-index: 0;
 }
 

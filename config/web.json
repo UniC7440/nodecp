@@ -12,6 +12,7 @@
     "showNode": false,
     "showNodeCP": true
   },
+  "pincodeEnabled": false,
   "installerPassword": "nodecp",
   "NEWS": {
     "rss": true,
@@ -51,6 +52,14 @@
     {
       "type": "installer",
       "name": "installer"
+    },
+    {
+      "type": "forgot",
+      "name": "forgot"
+    },
+    {
+      "type": "pin",
+      "name": "pin"
     }
   ],
   "NAVS": [
@@ -83,6 +92,11 @@
         {
           "name": "View Account",
           "href": "/account",
+          "mustbeLoggedIn": true
+        },
+        {
+          "name": "Change Pin",
+          "href": "/pin",
           "mustbeLoggedIn": true
         },
         {

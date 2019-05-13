@@ -10,7 +10,7 @@ module.exports = {
     }
 
     request.session.loggedin = false;
-    request.session.username = null;
+    request.session.account = null;
 
     response.redirect(WEB_CONFIG.baseURI ? `/${WEB_CONFIG.baseURI}/` : '/');
     return response.end();

@@ -1,6 +1,6 @@
 {
   "name": "nodecp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -12,6 +12,7 @@
     "express-flash": "^0.0.2",
     "express-flash-notification": "^0.5.0",
     "express-session": "^1.16.1",
+    "express-slash": "^2.0.1",
     "memory-cache": "^0.2.0",
     "moment": "^2.24.0",
     "rss-parser": "^3.7.0",

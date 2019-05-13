@@ -1,0 +1,55 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<link rel="stylesheet" type='text/css' href="../css/template.css">
+
+<form action="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/pin` : '/pin' %>" method="post" class="p-5" id="accForm" style="margin: 16px auto;  max-width: 400px;">
+  <% if (expressFlash && expressFlash.length > 0) { %>
+    <% if (expressFlash[0] === 'pin_disabled') { %>
+      <div class="alert alert-danger" role="alert">
+        You cannot change your pincode! This feature is disabled.
+      </div>
+    <% } %>
+    <% if (expressFlash[0] === 'not_loggedin') { %>
+      <div class="alert alert-danger" role="alert">
+        You are not logged in! Please login before using this.
+      </div>
+    <% } else if (expressFlash[0] === 'acc_wrongpass') { %>
+      <div class="alert alert-danger" role="alert">
+        Username is registered but you have given an incorrect password. Please try again.
+      </div>
+    <% } else if (expressFlash[0] === 'wrong_oldpin') { %>
+      <div class="alert alert-danger" role="alert">
+        Incorrect Old Pincode.
+      </div>
+    <% } else if (expressFlash[0] === 'wrong_newpin') { %>
+      <div class="alert alert-danger" role="alert">
+        Invalid new Pincode.
+      </div>
+    <% } else if (expressFlash[0] === 'done') { %>
+      <div class="alert alert-success" role="alert">
+        Successfully changed your pincode.
+      </div>
+    <% } %>
+  <% } %>
+
+  <p class="h2 mb-4 text-center">Change your Pin Code</p>
+  <p class="text-center">If no pincode is set, you could ignore the Old Pincode Form</p>
+
+  <input type="text" id="defaultLoginFormPin" class="d-inline form-control mb-4 text-center" placeholder="Old Pincode" name="old_pincode">
+
+  <input type="text" id="defaultLoginFormPin" class="d-inline form-control mb-4 text-center" placeholder="New Pincode" name="new_pincode" required>
+
+  <input type="password" id="defaultLoginFormPassword" class="d-inline form-control mb-4 text-center" placeholder="Password" name="password" required>
+
+  <% if (request.WEB_CONFIG.recaptcha.enabled) { %>
+    <div class="text-center">
+      <h5>Security</h5>
+      <div style="display: inline-block;" class="g-recaptcha" data-theme="dark" data-sitekey=<%= request.WEB_CONFIG.recaptcha.siteKey %>></div>
+    </div>
+  <% } %>
+
+  <button class="btn btn-primary btn-block my-2" type="submit">Login</button>
+</form>
+
+<script>
+  document.getElementById("nopin").remove();
+</script>

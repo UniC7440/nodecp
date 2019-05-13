@@ -6,6 +6,6 @@ module.exports = {
   exec: async function(request, response, next) {
     request.session.THEMES = request.body.theme;
 
-    response.send({ redirect: request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}` : '/' });
+    response.send({ redirect: request.get('referrer') });
   }
 };

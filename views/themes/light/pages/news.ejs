@@ -8,7 +8,7 @@
         <% } %>
         <div style="overflow: auto;" data-aos="fade-right" data-aos-duration="1000">
           <div class="card" style="margin: 20px;">
-            <div class="card-body" style="background-color: rgba(255, 255, 255, 0.8); border: 2px solid black; border-radius: 2px; %>">
+            <div class="card-body" style="background-color: rgba(255, 255, 255, 0.8); border: 2px solid black; border-radius: 2px;">
               <h5 class="card-title"><a href=<%= rss.link %> class="card-link"><%= rss.title %></a></h5>
               <h6 class="card-subtitle mb-2 text-muted">Posted at <%= request.moment(rss.isoDate).format('LLL'); %></h6>
               <p class="card-text"><%= rss.contentSnippet.substring(0, 550) + "..."; %></p>

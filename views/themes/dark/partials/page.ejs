@@ -3,6 +3,11 @@
 
 <div class="container" style="overflow: auto; margin-bottom:150px; margin-top: 150px;" data-aos="fade-right" data-aos-duration="1000">
   <div class="card" style="border: 2px solid white; background-color: rgba(0, 0, 0, 0.8); color: white;">
+    <% if (request.session.account && !request.session.account.pincode && request.WEB_CONFIG.pincodeEnabled) { %>
+      <div class="alert alert-danger" id="nopin" style="margin: 20px;" role="alert">
+        There is no pincode set on your account! Please set one <a href="<%= request.WEB_CONFIG.baseURI ? `/${request.WEB_CONFIG.baseURI}/pin` : '/pin' %>" >here.</a>
+      </div>
+    <% } %>
     <% for (var page of request.WEB_CONFIG.PAGES.filter(p => p.type.toLowerCase() === type.toLowerCase())) { %>
       <%- include(`../pages/${page.name}`, { request }); %>
     <% } %>

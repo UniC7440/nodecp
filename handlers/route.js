@@ -35,6 +35,9 @@ module.exports = {
       // Theme handler
       dynamicStatic.setPath(path.resolve(RouteData.baseDir + `/views/themes/${request.session.THEMES ? request.session.THEMES[0] : WEB_CONFIG.themes[0]}`));
 
+      // Make the app variable available to all routes so that our mailer module could be accesible.
+      request.app = app;
+
       // For install database system
       if (!route.includes('/installer')) {
         for (var database of request.WEB_CONFIG.databases) {
