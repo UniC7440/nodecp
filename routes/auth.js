@@ -37,7 +37,7 @@ module.exports = {
 
         if (request.body.password !== account.user_pass) {
           request.flash('success', 'acc_wrongpass');
-          return response.redirect(request.getNoCache('referrer'));
+          return response.redirect(request.get('referrer'));
         }
         
         if (request.WEB_CONFIG.pincodeEnabled && account.pincode && request.body.pincode !== account.pincode) {
